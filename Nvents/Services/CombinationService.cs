@@ -95,7 +95,7 @@ namespace Nvents.Services
             //  so correct event is passed to handler
             object baseNvent = UnwrapEvent(nvent);
 
-	        foreach (var registration in registrations.Where(x => ShouldEventBeHandled(x, baseNvent)))
+	        foreach (var registration in registrations.Where(x => ShouldEventBeHandled(x, baseNvent)).ToList())
                 registration.Action.Invoke(baseNvent);
 	    }
 

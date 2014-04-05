@@ -17,7 +17,7 @@ namespace Nvents.Services
 		public override void Publish<TEvent>(TEvent e)
 		{
 			foreach (var registration in registrations
-				.Where(x => ShouldEventBeHandled(x, e)))
+				.Where(x => ShouldEventBeHandled(x, e)).ToList())
 			{
 				ThreadPool.QueueUserWorkItem(s =>
 					((EventRegistration)s).Action(e), registration);

@@ -25,7 +25,7 @@ namespace Nvents.Services.Wcf
 		void server_EventPublished(object sender, EventPublishedEventArgs e)
 		{
 			foreach (var registration in registrations
-				.Where(x => ShouldEventBeHandled(x, e.Event)))
+				.Where(x => ShouldEventBeHandled(x, e.Event)).ToList())
 			{
 				try
 				{
