@@ -1,11 +1,10 @@
 ﻿using System;
-using Nvents.Services;
 using Nvents.SignalR;
 using Xunit;
 
 namespace Nvents.Tests
 {
-	public class InMemoryServiceTests
+	public class SignalRServiceTests
 	{
 		[Fact]
 		public void SignalRCanPublishEvent()
@@ -18,7 +17,7 @@ namespace Nvents.Tests
 			Assert.True(raised, "FooEvent was not raised");
 		}
 
-		public InMemoryServiceTests()
+        public SignalRServiceTests()
 		{
 		    var host = new NventsSignalRWindowsService();
             host.Start();

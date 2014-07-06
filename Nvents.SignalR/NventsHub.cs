@@ -5,9 +5,9 @@ namespace Nvents.SignalR
 {
     public class NventsHub : Hub
     {
-        public void Publish(Type eventType, string eventJson)
+        public void Publish(byte[] eventJson)
         {
-            Clients.All.Receive(eventType, eventJson);
+            Clients.All.HandleNvent(eventJson);
         }
     }
 }
