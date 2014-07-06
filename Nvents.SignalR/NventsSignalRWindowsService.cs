@@ -13,7 +13,7 @@ namespace Nvents.SignalR
         public async void Start()
         {
             string url = ConfigurationManager.AppSettings["SignalRServerAddress"];
-            webApp = WebApp.Start(url);
+            webApp = WebApp.Start<Startup>(url);
         }
 
         public void Stop()
