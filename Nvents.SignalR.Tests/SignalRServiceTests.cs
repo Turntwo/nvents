@@ -10,9 +10,9 @@ namespace Nvents.Tests
 		public void SignalRCanPublishEvent()
 		{
 			var raised = false;
-			Events.Subscribe<FooEvent>(e => raised = true);
+            Events.Subscribe<SerializableFooEvent>(e => raised = true);
 
-			Test.WaitFor(() => raised, TimeSpan.FromSeconds(1), () => Events.Publish(new FooEvent()));
+            Test.WaitFor(() => raised, TimeSpan.FromSeconds(1), () => Events.Publish(new SerializableFooEvent()));
 
 			Assert.True(raised, "FooEvent was not raised");
 		}

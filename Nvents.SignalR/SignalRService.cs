@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -12,6 +13,8 @@ namespace Nvents.SignalR
     {
         private IHubProxy nventsHubProxy;
         public HubConnection HubConnection { get; private set; }
+        private DateTime lastRestart = DateTime.MinValue;
+        private bool stopping;
 
         public SignalRService(bool autoStart = true) : base(autoStart)
         {
@@ -22,14 +25,24 @@ namespace Nvents.SignalR
         protected override void OnStart()
         {
             base.OnStart();
+            stopping = false;
             HubConnection = new HubConnection(ConfigurationManager.AppSettings["SignalRServerAddress"]);
+            HubConnection.Closed += () =>
+            {
+                if (!stopping && lastRestart <= DateTime.UtcNow.Subtract(TimeSpan.FromSeconds(2)))
+                {
+                    HubConnection.Start().Wait();
+                    lastRestart = DateTime.UtcNow;
+                }
+            };
             nventsHubProxy = HubConnection.CreateHubProxy("NventsHub");
             nventsHubProxy.On<byte[]>("HandleNvent", ProcessNvent);
-            HubConnection.Start().Wait();
+            HubConnection.Start();
         }
 
         protected override void OnStop()
         {
+            stopping = true;
             base.OnStop();
             HubConnection.Dispose();
         }

@@ -60,6 +60,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="FooEvent.cs" />
     <Compile Include="SignalRServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
