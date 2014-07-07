@@ -7,7 +7,7 @@ namespace Nvents.Tests
 	public class InMemoryServiceTests
 	{
 		[Fact]
-		public void CanPublishEvent()
+		public void CanPublishSignalREvent()
 		{
 			var raised = false;
 			Events.Subscribe<FooEvent>(
